@@ -1,0 +1,300 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage[numbers]{natbib}
+
+\title{\textbf{Progress Report: eQTL Quality Control \& Candidate Prioritization} \\ \large Adipose and Liver Tissues from the HSNIH-Palmer Rat Cohort}
+\author{Felix}
+
+\begin{document}
+\maketitle
+
+\section*{Summary}
+This report presents quality control and prioritized results for the expression quantitative trait locus (eQTLs) data from adipose and liver tissues found in GeneNetwork.org. The selection criteria involved picking all eqtls with ($-\log_{10}P \geq 20$) significant threshold, resulting in \textbf{891} adipose genes and \textbf{570} liver genes. A classification is then made to separate cis- and trans-eQTLs, identify high-confidence candidate genes, cross-tissue integration between adipose and liver, and suggestive way forward for the cis- and trans-bands. The report also highlights key findings in this GN2 dataset that was not captured in the literature publication that used the same data in \cite{hongle2023}. 
+
+\section{Data Overview \& Statistics} 
+\subsection{Input Datasets} 
+The 2 datasets are per-gene summary tables from GN2. Each row per best eQTL score for that gene with the following info:
+\begin{itemize}
+    \item \textbf{Symbol / Description} — gene annotation
+    \item \textbf{Location} — gene body coordinates
+    \item \textbf{Peak Location} — coordinates of the strongest associated marker
+    \item \textbf{Peak $-\log_{10}(P)$} — statistical significance
+    \item \textbf{Effect Size} — estimated effect in rlog-normalized RNA-seq units
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\caption{Summary Statistics by Tissue}
+\label{tab:summary}
+\begin{tabular}{lcc}
+\toprule
+\textbf{Metric} & \textbf{Adipose} & \textbf{Liver} \\
+\midrule
+Total genes & 891 & 570 \\
+Cis-eQTLs (within 4 Mb) & 790 (88.7\%) & 514 (90.2\%) \\
+Trans-eQTLs ($>$ 4 Mb or different chr) & 101 (11.3\%) & 56 (9.8\%) \\
+Max $-\log_{10}(P)$ & 169.4 & 175.6 \\
+Max $|$Effect Size$|$ & 3.56 & 5.60 \\
+Pearson $r$ ($-\log P$ vs. $|$ES$|$) & 0.76 & 0.85 \\
+Flagged for inspection & 101 (11.3\%) & 56 (9.8\%) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Why are the $P$-values so extreme?} Suggestively, an HS population with $n \sim 300$--$500$ individuals, a cis-eQTL explaining $>$30\% of expression variance routinely yields $-\log_{10}P > 100$. Also, the strong positive correlation between significance and effect size  (Table~\ref{tab:summary}) indicate that high $-\log P$ values are driven by large biological effects rather than vanishing standard errors. 
+
+
+\section{Cis vs.\ Trans Classification}
+
+A standard 4 Mb window was used: if the best peak lies on the same chromosome and within 4 Mb of the gene body, the eQTL is called \textbf{cis}; otherwise it is \textbf{trans}. The vast majority of hits are cis ($\sim$89\%), which is the expected biological pattern because local regulatory variants (promoters, enhancers) typically exert the strongest influence on gene expression.
+
+\noindent\textbf{Genomic context breakdown:}
+\begin{itemize}
+    \item \textbf{Promoter} ($<$0.1 Mb): $\sim$22\% of cis hits — most interpretable
+    \item \textbf{Proximal} (0.1--1.0 Mb): $\sim$56\% of cis hits — nearby regulatory elements
+    \item \textbf{Distal cis} (1.0--4.0 Mb): $\sim$11\% of cis hits — possible long-range enhancers
+    \item \textbf{Trans} ($>$4 Mb or different chr): $\sim$10\% — artifacts, or overlooked biological signals? 
+\end{itemize}
+\noindent The 4\, Mb threshold was chosen to capture both proximal regulatory elements and distal enhancers that frequently fall within the same topologically associating domain (TAD) in mammalian genomes~\cite{dixon2012}, while many human eQTL studies (e.g., GTEx) use a more conservative 1\,Mb window~\cite{gtex2017}.
+
+\section{Trans-eQTLs} 
+
+Trans-eQTLs with massive effect sizes and astronomical significance are often dismissed as artifacts. However, in a genetically heterogeneous population of $\sim$300--500 rats, any systematic signal that segregates with genotype is unlikely to purely noise~\cite{vosa2021}. It may instead reflect: (i) a true master regulatory variant, (ii) a copy-number variant (CNV) or segmental duplication, or (iii) mapping ambiguity arising from a reference genome that lacks founder-specific sequence. Rather than discarding these hits, I applied four \textbf{annotation flags} and retained every trans-eQTL for downstream inspection:
+\begin{enumerate}
+    \item \texttt{MEGA\_EFFECT} — trans-eQTL with $|$Effect Size$|$ $>$ 2.0 or $-\log_{10}P$ $>$ 80
+    \item \texttt{PSEUDOGENE\_TRANS} — any pseudogene with a trans-eQTL
+    \item \texttt{LOC\_UNCHARACTERIZED} — any uncharacterized \texttt{LOC} gene with a trans-eQTL and $-\log_{10}P$ $>$ 60
+    \item \texttt{CROSS\_TISSUE\_TRANS} — trans-eQTLs replicating in both adipose and liver
+\end{enumerate}
+
+\noindent\textbf{Cross-tissue trans hotspots:} These suggestively points to systematic genomic features like CNVs, mobile elements, or pangenomics gaps in the linear reference. 
+
+
+\section{eQTL/Candidate Genes Prioritization}
+
+\begin{description}
+    \item[Tier 1 (High Confidence)] Not flagged; strong cis-eQTL; known, well-annotated protein-coding gene; biological score in the top 15\%.\\
+    \textit{Adipose: 93 genes $|$ Liver: 59 genes}
+    
+    \item[Tier 2 (Validate)] Unflagged cis hits with moderate scores, or trans-eQTLs with modest effects.
+    
+    \item[Tier 3 (Flagged for Inspection)] Trans-eQTLs annotated with one or more flags (\texttt{MEGA\_EFFECT}, \texttt{PSEUDOGENE\_TRANS}, \texttt{LOC\_UNCHARACTERIZED}, \texttt{CROSS\_TISSUE\_TRANS}). These are \textbf{not discarded} but set aside for pangenomic/CNV follow-up and trans-band analysis.
+\end{description}
+
+\noindent Tier 1 was further refined to exclude uncharacterized \texttt{LOC} symbols and pseudogenes, ensuring the list contains only biologically interpretable targets.
+
+\section{Trans-Bands: Hotspots of Distal Regulation} 
+
+A ``trans-band'' is a genomic locus where the best eQTL peak for multiple independent genes co-localizes. In an HS population, a true master regulator or structural variant should create a ``peak of peaks.'' I clustered all trans-eQTLs into 5~Mb bins and identified \textbf{73 trans-bands}, of which the most striking are listed in Table~\ref{tab:transbands}.
+
+\begin{table}[H]
+\centering
+\caption{Top Trans-Bands (Genomic Hotspots of Distal Regulation)}
+\label{tab:transbands}
+\small
+\begin{tabular}{p{2.2cm}ccp{2cm}ccp{3.8cm}}
+\toprule
+\textbf{Band} & \textbf{Genes} & \textbf{Cross-Tissue?} & \textbf{Top Hit} & \textbf{Max $-\log P$} & \textbf{Max $|$ES$|$} & \textbf{Flags} \\
+\midrule
+Chr7:0--5~Mb & 9 & Yes & LOC680933 & 50.0 & 1.11 & LOC\_UNCHAR; NEAR\_TELOMERE; MASTER\_REG \\
+Chr8:40--45~Mb & 3 & Yes & LOC691532 & 169.4 & 4.12 & MEGA\_EFFECT; CROSS\_TISSUE; MASTER\_REG \\
+Chr5:160--165~Mb & 2 & Yes & Eno1-ps20 & 160.6 & 4.48 & PSEUDOGENE; MEGA\_EFFECT; CROSS\_TISSUE \\
+Chr19:10--15~Mb & 4 & Yes & LOC291863 & 101.4 & 2.29 & MEGA\_EFFECT; CROSS\_TISSUE; MASTER\_REG \\
+Chr4:105--115~Mb & 6 & Yes & RGD1359290 & 59.4 & 2.04 & CROSS\_TISSUE; MEGA\_EFFECT \\
+Chr15:50--55~Mb & 3 & Yes & LOC120101677 & 141.1 & 2.37 & MEGA\_EFFECT; CROSS\_TISSUE; MASTER\_REG \\
+Chr15:28--30~Mb & 3 & No & Rnase1 & 31.3 & 2.13 & PARALOG\_FAMILY \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Key interpretation:} Three of these bands (Chr8:40--45, Chr5:160--165, Chr4:105--115) replicate across adipose and liver. Rather than artifacts, they may tag \textbf{uncharacterized structural variants} absent from the linear reference genome. The Chr15:28--30 band contains three \textit{Rnase} paralogs driven by the same locus, consistent with either a regulatory polymorphism affecting the whole cluster or cross-mapping between highly similar sequences. All bands are retained in the master candidate list with their flags.
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.98\textwidth]{trans_band_faceted.png}
+\caption{\textbf{Trans-eQTLs faceted by chromosome.} Each panel shows one chromosome. Orange/blue dots = individual adipose/liver trans-eQTLs. Purple shaded bars = 5~Mb trans-band windows. Purple boxed labels = number of genes in that band.}
+\label{fig:transbands}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{trans_band_lollipop.png}
+\caption{\textbf{Top 20 trans-bands (horizontal lollipop).} Bands are ranked by priority (cross-tissue replication, gene count, and max $-\log P$). Purple markers = replicated in both tissues. Right-side labels show gene count and the top-hit gene. Left-side labels show abbreviated flags (CT = cross-tissue; MEGA = mega-effect; LOC = uncharacterized; PSEUDO = pseudogene; MASTER = master-regulator candidate).}
+\label{fig:lollipop}
+\end{figure}
+
+\section{Cross-Tissue Integration}
+
+Merging the two tissues on gene symbol yielded \textbf{197 shared genes}. Their regulatory patterns were classified as follows:
+
+\begin{table}[H]
+\centering
+\caption{Pleiotropy Classification for Genes Detected in Both Tissues}
+\label{tab:pleio}
+\begin{tabular}{lc}
+\toprule
+\textbf{Class} & \textbf{Count} \\
+\midrule
+Shared conserved cis (same peak, same direction) & 135 \\
+Shared cis, opposite direction & 28 \\
+Shared cis, different locus & 1 \\
+Tissue-specific cis & 1 \\
+Trans in both (hotspot, flagged) & 33 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\textbf{Key finding:} 135/197 shared genes ($\sim$69\%) exhibit \emph{conserved} cis-regulation across adipose and liver. This suggests that many strong expression-QTLs are driven by genetic variants with pleiotropic, tissue-shared effects rather than tissue-specific enhancers.
+
+\noindent A \textbf{master score} was computed for every gene by combining its biological score, cross-tissue evidence, promoter proximity, and modest penalties for flagged trans hits (reduced from a hard exclusion to a --20-point penalty so that genuine master regulators are not lost). The top-scoring genes (e.g. \textit{Fam111a}, \textit{RT1-N2}, \textit{H2ac18}, \textit{Ifit1}, \textit{Lcn2}) represent the highest-priority targets.
+
+\section{Divergence from the Published Protocol (Hong-Le et al.~2023)}
+
+Four ways showing key differences between the GN2 results and the publication results for the same data 
+
+\begin{enumerate}
+    \item \textbf{Pre-filtered vs.~genome-wide.} The literature~\cite{hongle2023} mapped 18,358 adipose and 16,796 liver transcripts genome-wide and called 2,226 and 2,267 cis-eQTLs at FDR $<$ 0.001. My input tables are already pre-filtered at $-\log_{10}P \geq 20$, so I analyse only the extreme tail ($\sim$5\% of all mapped genes). This means my results are not directly comparable in absolute counts but focus on the highest-confidence associations.
+    
+    \item \textbf{Cis-window (4~Mb vs.~1~Mb).} The literature used a 1~Mb cis window; I use 4~Mb to capture long-range enhancers within topologically associating domains. This inflates the cis fraction ($\sim$89\% vs.~their unreported but likely similar rate) and means some of my ``cis'' hits would be re-classified as trans in the paper.
+    
+    \item \textbf{Annotation content.} Roughly 40\% of my significant hits map to uncharacterised \texttt{LOC} symbols, pseudogenes, or \texttt{RGD} placeholders. The literature focused on well-annotated protein-coding mediators (e.g. \textit{Grk5}, \textit{Krtcap3}). However, the uncharacterised loci could be prime candidates for pangenomic re-annotation.
+    
+    \item \textbf{Trans-eQTLs.} The literature essentially ignored trans-eQTLs. I flagged every trans hit, identified cross-tissue trans-bands, and proposed structural-variant or pangenomic explanations from these findings.
+\end{enumerate}
+
+\section{Figures}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{eQTL_QC_summary.png}
+\caption{\textbf{Quality-control dashboard.} Each row corresponds to one tissue (Adipose top, Liver bottom). \textit{Left:} $-\log_{10}P$ versus $|$Effect Size$|$; green = cis, red = trans. \textit{Middle:} boxplot of $-\log_{10}P$ for cis vs.\ trans. \textit{Right:} Tier 1/2/3 counts. The plots confirm that cis-eQTLs dominate and effect sizes correlate with significance. Tier~3 (purple) contains trans hits that are now retained with flags rather than discarded.}
+\label{fig:qc}
+\end{figure}
+
+\noindent\textbf{Interpretation:} Most eQTLs are cis and look biologically reasonable. The strong correlation between significance and effect size means the extreme $P$-values are driven by large biological effects, not statistical noise.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{eQTL_manhattan.png}
+\caption{\textbf{Genome-wide Manhattan plot.} Chromosomes are arranged on the x-axis and $-\log_{10}P$ on the y-axis. Green dots = cis-eQTLs; red dots = trans-eQTLs. Strong peaks are scattered across the genome; the sparse but extreme red points are the flagged trans hits.}
+\label{fig:manhattan}
+\end{figure}
+
+\noindent\textbf{Interpretation:} Significant associations are distributed genome-wide. The red trans points that spike above the background are now \textbf{retained} in downstream tables with annotation flags (Table~\ref{tab:transbands}) rather than removed.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{cross_tissue_effectsize_comparison.png}
+\caption{\textbf{Cross-tissue effect-size comparison.} Each dot is a gene detected in both tissues. X-axis = Adipose effect size; Y-axis = Liver effect size. Colors denote pleiotropy class (blue = shared conserved cis; orange = flipped direction; green = different locus; red = tissue-specific). \textbf{Black triangles} = trans\_both\_hotspot genes (retained with flags, not discarded). The diagonal dashed line marks equal effects.}
+\label{fig:es}
+\end{figure}
+
+\noindent\textbf{Interpretation:} Most genes cluster in the top-right or bottom-left quadrants, meaning the causal allele shifts expression the \emph{same way} in both tissues. Points near the diagonal have quantitatively similar effects, reinforcing shared genetic regulation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{cross_tissue_logp_comparison.png}
+\caption{\textbf{Cross-tissue significance comparison.} Same design as Figure~\ref{fig:es}, but now comparing $-\log_{10}P$ values. \textbf{Black triangles} = trans\_both\_hotspot genes. The dashed diagonal marks equal significance.}
+\label{fig:logp}
+\end{figure}
+
+\noindent\textbf{Interpretation:} The tight correlation shows that significance is largely shared: a gene with a strong cis-eQTL in adipose usually also has one in liver. Genes far from the diagonal are candidates for tissue-specific regulation.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{cross_tissue_pleiotropy.png}
+\caption{\textbf{Pleiotropy classification.} Horizontal bar chart counting shared genes by regulatory class. ``shared\_cis\_conserved'' (blue) is the largest group. \textbf{Black bar} = trans\_both\_hotspot (33 genes), now retained and flagged rather than excluded.}
+\label{fig:pleio}
+\end{figure}
+
+\noindent\textbf{Interpretation:} Roughly 70\% of shared genes have conserved cis-regulation, meaning the genetic architecture of expression is largely shared between adipose and liver.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{cross_tissue_genomic_context.png}
+\caption{\textbf{Genomic context.} Side-by-side bar charts classifying eQTLs by physical distance from the gene: promoter ($<$0.1 Mb), proximal (0.1--1.0 Mb), distal cis (1--4 Mb), or trans ($>$4 Mb).}
+\label{fig:context}
+\end{figure}
+
+\noindent\textbf{Interpretation:} About 80\% of cis-eQTLs are promoter or proximal, increasing confidence that the associations map to genuine local regulatory elements rather than distant artifacts.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{cross_tissue_specificity.png}
+\caption{\textbf{Tissue specificity.} \textit{Left:} histogram of the tissue-specificity index (0 = equal strength, 1 = completely specific). \textit{Right:} boxplots stratified by pleiotropy class, now including \texttt{trans\_both\_hotspot} (dark gray).}
+\label{fig:spec}
+\end{figure}
+
+\noindent\textbf{Interpretation:} Shared conserved cis genes cluster near 0, confirming that most strong eQTLs are \emph{not} tissue-specific. This supports generalizing findings across tissues.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.7\textwidth]{cross_tissue_tier1_overlap.png}
+\caption{\textbf{Tier 1 overlap.} Bar chart showing how many top candidates are unique to adipose, unique to liver, or shared. Trans-eQTLs are naturally absent because Tier~1 is defined as strong cis hits on well-annotated genes; trans hits are retained in Tier~3 (Flagged for Inspection).}
+\label{fig:tier1}
+\end{figure}
+
+\noindent\textbf{Interpretation:} There is a meaningful shared core of top candidates (shared Tier 1), but also tissue-unique hits worth exploring for tissue-specific biology. The shared set is the most robust for follow-up.
+
+\section{Conclusion} 
+
+The revised QC pipeline retains all 1,461 significant eQTLs (891 adipose + 570 liver) while annotating 157 trans hits with granular flags. Cross-tissue integration identified 135 genes with conserved cis-regulation and 33 cross-tissue trans-hotspot genes that are now retained for pangenomic follow-up. Seven trans-bands --- including three replicating across adipose and liver --- suggest that population-segregating structural variants or master regulatory polymorphisms may be more common than a strict cis-only model assumes. The recommended path forward is therefore two-track: (i) manual curation and fine-mapping of the 162 Tier~1 high-confidence cis candidates, and (ii) dedicated inspection of the top trans-bands via read-depth analysis, founder-haplotype tracing, and pangenomic re-mapping to distinguish genuine master regulators from mapping artifacts.
+
+\begin{thebibliography}{99}
+
+\bibitem{hongle2023}
+Hong-Le T, Crouse WL, Keele GR, et al.
+Genetic mapping of multiple traits identifies novel genes for adiposity, lipids, and insulin secretory capacity in outbred rats.
+\textit{Diabetes}. 2023;72(1):135--148.
+
+\bibitem{gtex2017}
+The GTEx Consortium.
+Genetic effects on gene expression across human tissues.
+\textit{Nature}. 2017;550(7675):204--213.
+
+\bibitem{gtex2020}
+The GTEx Consortium.
+The GTEx Consortium atlas of genetic regulatory effects across human tissues.
+\textit{Science}. 2020;369(6509):1318--1330.
+
+\bibitem{grundberg2012}
+Grundberg E, Small KS, Hedman AK, et al.
+Mapping cis- and trans-regulatory effects across multiple tissues in twins.
+\textit{Nat Genet}. 2012;44(10):1084--1089.
+
+\bibitem{dixon2012}
+Dixon JR, Selvaraj S, Yue F, et al.
+Topological domains in mammalian genomes identified by analysis of chromatin interactions.
+\textit{Nature}. 2012;485(7398):376--380.
+
+\bibitem{vosa2021}
+V{\"o}sa U, Claringbould A, Westra HJ, et al.
+Large-scale cis- and trans-eQTL analyses identify thousands of genetic loci and polygenic scores that regulate blood gene expression.
+\textit{Nat Genet}. 2021;53(9):1300--1310.
+
+\bibitem{treangen2012}
+Treangen TJ, Salzberg SL.
+Repetitive DNA and next-generation sequencing: computational challenges and solutions.
+\textit{Nat Rev Genet}. 2012;13(1):36--46.
+
+\bibitem{pei2012}
+Pei B, Sisu C, Frankish A, et al.
+The GENCODE pseudogene resource.
+\textit{Genome Biol}. 2012;13(9):R51.
+
+\end{thebibliography}
+
+\end{document} 

@@ -1,0 +1,219 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+\usetheme{Madrid}
+\usecolortheme{seahorse}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{tikz}
+
+\title[eQTL QC \& Prioritization]{eQTL Quality Control, Candidate Prioritization \& Trans-Band Analysis}
+\subtitle{Adipose \& Liver Tissues from HSNIH-Palmer Rat Cohort (GeneNetwork)}
+\author{Felix Lisso}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+\tableofcontents
+\end{frame}
+
+\section{Data \& Pipeline Overview}
+\begin{frame}{What We Started With}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\textbf{Input:} Pre-filtered eQTL tables from GeneNetwork 2 ($-\log_{10}P \geq 20$)
+\begin{itemize}
+    \item \textbf{Adipose:} 891 genes
+    \item \textbf{Liver:} 570 genes
+    \item Per-gene best peak: location, $-\log P$, effect size
+\end{itemize}
+\vspace{0.3cm}
+\textbf{Pipeline:}
+\begin{enumerate}
+    \item Cis vs Trans classification (4 Mb window)
+    \item Flag trans hits (MEGA\_EFFECT, PSEUDOGENE, LOC, CROSS\_TISSUE)
+    \item Three-tier scoring (Tier 1 / 2 / 3)
+    \item Cross-tissue integration + master scoring
+    \item Trans-band clustering (5 Mb bins)
+\end{enumerate}
+\end{column}
+\begin{column}{0.50\textwidth}
+\centering
+\includegraphics[width=1.05\textwidth]{eQTL_QC_summary.png}
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Key Finding 1: Keep the Trans Hits}
+\begin{frame}{Why This Matters: 33 Cross-Tissue Trans Hotspots}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\small
+\textbf{If a trans signal replicates in both adipose and liver, it is unlikely to be random noise.}
+\vspace{0.15cm}
+
+\textbf{What we changed:}
+\begin{itemize}
+    \item \textbf{Before:} Trans-eQTLs flagged as ``artifacts'' and excluded
+    \item \textbf{After:} \textbf{All 157 trans hits retained} with 4 flags
+\end{itemize}
+\vspace{0.15cm}
+
+\textbf{Possible biological explanations:}
+\begin{enumerate}
+    \item \textbf{True master regulator} --- one variant drives many distal genes
+    \item \textbf{Copy-number variant (CNV)} or segmental duplication
+    \item \textbf{Mapping ambiguity} from a linear reference lacking founder-specific sequence
+\end{enumerate}
+\end{column}
+\begin{column}{0.50\textwidth}
+\centering
+\includegraphics[width=\textwidth]{cross_tissue_effectsize_comparison.png}
+\tiny Black triangles = trans\_both\_hotspot genes
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Key Finding 2: Trans-Bands}
+\begin{frame}{Trans-Bands: Genomic Hotspots of Distal Regulation}
+\textbf{Definition:} A 5 Mb window where multiple independent genes carry a trans-eQTL peak.
+\vspace{0.2cm}
+
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\centering
+\includegraphics[width=0.90\textwidth]{trans_band_lollipop.png}
+\end{column}
+\begin{column}{0.50\textwidth}
+\small
+\textbf{Top bands (all cross-tissue):}
+\begin{itemize}
+    \item \textbf{Chr8:40--45 Mb} --- 3 genes, max $-\log P$ = 169.4 (LOC691532)
+    \item \textbf{Chr5:160--165 Mb} --- 2 genes, max $-\log P$ = 160.6 (Eno1-ps20)
+    \item \textbf{Chr4:105--115 Mb} --- 6 genes, max $-\log P$ = 59.4
+    \item \fcolorbox{red}{white}{\textbf{Chr7:0--5 Mb} --- 9 genes (telomeric cluster)}
+\end{itemize}
+\vspace{0.15cm}
+\textbf{Proposal:} These are candidates for \textbf{pangenomic/CNV inspection}, not artifacts.
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Chr7:0--5 Mb --- The Strongest Trans-Band}
+\begin{columns}
+\begin{column}{0.56\textwidth}
+\centering
+\includegraphics[width=\textwidth]{trans_band_landscape.png}
+\end{column}
+\begin{column}{0.42\textwidth}
+\centering
+\includegraphics[width=\textwidth]{chr7_zoom.png}
+\end{column}
+\end{columns}
+\vspace{0.15cm}
+\textbf{Why Chr7 is interesting:}
+\begin{itemize}
+    \item 9 genes map to the very start of Chr7 (within 5 Mb of the telomere)
+    \item All are uncharacterized LOC genes
+    \item Could be a genuine regulatory cluster, an assembly gap, or a segmental duplication
+    \item \textbf{Action item:} Check RGD for known CNVs; inspect raw read depth
+\end{itemize}
+\end{frame}
+
+\section{Key Finding 3: Cross-Tissue Cis Conservation}
+\begin{frame}{Most Strong Cis-eQTLs Are Conserved Across Tissues}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\centering
+\includegraphics[width=0.85\textwidth]{cross_tissue_pleiotropy.png}
+\end{column}
+\begin{column}{0.50\textwidth}
+\textbf{197 genes detected in both tissues:}
+\begin{table}
+\centering
+\small
+\begin{tabular}{lr}
+\toprule
+\textbf{Class} & \textbf{Count} \\
+\midrule
+Shared conserved cis & 135 \\
+Shared cis, flipped & 28 \\
+Trans in both (hotspot) & 33 \\
+Tissue-specific cis & 1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+\vspace{0.2cm}
+\textbf{Take-home:} 69\% of shared genes have the \textbf{same cis peak, same direction} in both tissues. The genetic architecture of expression is largely shared between adipose and liver.
+\end{column}
+\end{columns}
+\end{frame}
+
+\section{Divergence from Hong-Le et al. 2023}
+\begin{frame}{What We Did Differently From the Paper}
+\begin{table}
+\centering
+\small
+\begin{tabular}{p{3.5cm}p{4.5cm}p{4.5cm}}
+\toprule
+\textbf{Aspect} & \textbf{Hong-Le et al.} & \textbf{Our Analysis} \\
+\midrule
+Genome coverage & 18K / 17K transcripts (FDR < 0.001) & Pre-filtered tail ($-\log P \geq 20$) \\
+Cis window & 1 Mb & 4 Mb (captures distal enhancers in TADs) \\
+Trans-eQTLs & Essentially ignored & \textbf{Retained, flagged, clustered} \\
+Annotation focus & Well-known mediators (Grk5, Krtcap3) & 40\% uncharacterized LOC/pseudogenes \\
+\bottomrule
+\end{tabular}
+\end{table}
+\vspace{0.2cm}
+\textbf{This is not a bug; it's a different lens on the same data.} The paper asked ``which cis-eQTLs mediate metabolic traits?'' We ask ``what systematic genomic features are hiding in the trans signal?''
+\end{frame}
+
+\section{Next Steps \& Proposals}
+\begin{frame}{Two-Track Path Forward}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\begin{block}{Track 1: Cis Candidates}
+\begin{itemize}
+    \item Manual curation (verify symbols, check peaks in RGD/Ensembl)
+    \item Colocalization with metabolic GWAS (COLOC)
+    \item Fine-mapping on top 5--10 loci
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Track 2: Trans-Bands}
+\begin{itemize}
+    \item Raw read-depth analysis at top 3 bands
+    \item Founder haplotype tracing (8 HS founders)
+    \item \textbf{Pangenomic re-mapping:} Minigraph-Cactus with founder assemblies
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\vspace{0.3cm}
+\centering
+\textbf{Suggestive hypothesis:} Population-segregating structural variants, absent from the linear reference, act as master regulators of multiple expression traits.
+\end{frame}
+
+\begin{frame}{Summary}
+\begin{enumerate}
+    \item \textbf{All trans-eQTLs are retained} with granular flags --- no more silent exclusion
+    \item \textbf{7 trans-bands} identified, 3 replicating across tissues --- candidates for CNV/SV inspection
+    \item \textbf{135/197} shared genes have conserved cis regulation --- expression architecture is largely tissue-shared
+    \item \textbf{Intentional divergence} from Hong-Le et al.: we focus on the extreme tail and the trans signal
+    \item \textbf{Proposal:} Pangenomic re-mapping of top trans-bands to test the ``hidden structural variant'' hypothesis
+\end{enumerate}
+\vspace{0.3cm}
+\centering
+\Large \textbf{Thank you --- Questions?}
+\end{frame}
+
+\end{document}

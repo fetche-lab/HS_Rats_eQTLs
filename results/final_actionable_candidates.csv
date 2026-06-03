@@ -1,0 +1,163 @@
+Symbol,best_description,functional_category,pleiotropy_class,master_score,Peak -logP_adipose,Effect Size_adipose,genomic_context_adipose,tier_adipose,Peak -logP_liver,Effect Size_liver,genomic_context_liver,tier_liver,same_direction,peak_distance_mb
+Fam111a,FAM111 trypsin like peptidase A,proteolysis,shared_cis_conserved,87.9,167.2,3.266,proximal,Tier_1_HighConfidence,133.9,3.869,proximal,Tier_1_HighConfidence,True,0.0
+RT1-N2,"RT1 class Ib, locus N2",other,shared_cis_conserved,82.055,118.2,-2.911,promoter,Tier_1_HighConfidence,133.4,-3.817,promoter,Tier_1_HighConfidence,True,0.0
+H2ac18,histone cluster 2 H2A family member A2,transcription_chromatin,shared_cis_conserved,79.125,92.6,-2.853,promoter,Tier_1_HighConfidence,98.2,-3.491,promoter,Tier_1_HighConfidence,True,0.0
+Ifit1,interferon-induced protein with tetratricopeptide repeats 1,immune,shared_cis_conserved,77.822,150.0,2.342,proximal,Tier_1_HighConfidence,129.2,3.204,proximal,Tier_1_HighConfidence,True,0.0
+Lcn2,lipocalin 2,other,shared_cis_conserved,73.683,120.7,-2.19,proximal,Tier_1_HighConfidence,89.9,-2.438,proximal,Tier_1_HighConfidence,True,0.0
+Mis18a,MIS18 kinetochore protein A,other,shared_cis_conserved,70.721,123.8,1.835,proximal,Tier_1_HighConfidence,113.8,2.362,proximal,Tier_1_HighConfidence,True,0.0
+Hba-a3,"hemoglobin alpha, adult chain 3",other,shared_cis_conserved,68.195,85.8,-1.948,proximal,Tier_1_HighConfidence,99.0,-2.475,proximal,Tier_1_HighConfidence,True,0.0
+Ubd,ubiquitin like modifier D,proteolysis,shared_cis_conserved,67.497,74.2,1.746,proximal,Tier_1_HighConfidence,96.3,2.921,proximal,Tier_1_HighConfidence,True,0.0
+Scd3,stearoyl-coenzyme A desaturase 3,lipid_metabolism,shared_cis_conserved,67.108,83.4,3.432,proximal,Tier_1_HighConfidence,20.1,0.54,proximal,Tier_2_Validate,True,0.0
+Nat3,N-acetyltransferase 3,lipid_metabolism,shared_cis_conserved,67.02,93.3,-1.743,proximal,Tier_1_HighConfidence,70.1,-1.795,proximal,Tier_1_HighConfidence,True,0.0
+Abca17,"ATP-binding cassette, subfamily A (ABC1), member 17",other,shared_cis_conserved,65.833,120.5,-1.344,promoter,Tier_1_HighConfidence,36.2,-0.928,promoter,Tier_2_Validate,True,0.0
+RT1-CE12,"RT1 class I, locus CE12",other,shared_cis_conserved,65.721,137.2,1.136,proximal,Tier_1_HighConfidence,119.9,2.6,proximal,Tier_1_HighConfidence,True,0.0
+Galnt12,polypeptide N-acetylgalactosaminyltransferase 12,lipid_metabolism,shared_cis_conserved,65.696,109.8,-1.844,proximal,Tier_1_HighConfidence,52.5,-1.085,proximal,Tier_2_Validate,True,0.0
+Syce1,synaptonemal complex central element protein 1,other,shared_cis_conserved,65.513,78.6,-1.748,proximal,Tier_1_HighConfidence,70.3,-1.713,proximal,Tier_1_HighConfidence,True,1.076
+RGD1563402,Cbp/p300-interacting transactivator with Glu/Asp-rich carboxy-terminal domain 1 like 1,other,shared_cis_conserved,65.303,123.9,2.19,proximal,Tier_1_HighConfidence,26.6,0.454,proximal,Tier_2_Validate,True,0.0
+Zfp94l1,zinc finger protein 94 like 1,transcription_chromatin,shared_cis_conserved,64.948,115.6,-1.422,proximal,Tier_1_HighConfidence,43.9,-1.178,proximal,Tier_2_Validate,True,0.0
+Scrn1,secernin 1,other,shared_cis_conserved,64.092,22.6,0.402,proximal,Tier_2_Validate,125.7,3.174,proximal,Tier_1_HighConfidence,True,0.0
+RT1-CE16,"RT1 class I, locus CE16",other,shared_cis_conserved,64.012,118.3,-1.06,proximal,Tier_1_HighConfidence,115.0,-2.264,proximal,Tier_1_HighConfidence,True,0.0
+Cd300c,CD300c molecule,other,shared_cis_conserved,63.732,106.1,1.943,proximal,Tier_1_HighConfidence,32.5,0.679,proximal,Tier_2_Validate,True,0.272
+Nefh,neurofilament heavy chain,other,shared_cis_conserved,63.235,74.1,1.576,proximal,Tier_1_HighConfidence,61.2,1.485,proximal,Tier_1_HighConfidence,True,0.0
+Cyp4f37,"cytochrome P450, family 4, subfamily f, polypeptide 37",other,shared_cis_conserved,62.93,30.9,-0.425,proximal,Tier_2_Validate,113.6,-2.347,promoter,Tier_1_HighConfidence,True,0.092
+Serhl2,serine hydrolase-like 2,other,shared_cis_conserved,62.926,124.0,0.871,promoter,Tier_1_HighConfidence,46.3,0.675,proximal,Tier_2_Validate,True,0.644
+Adh7,"alcohol dehydrogenase 7 (class IV), mu or sigma polypeptide",lipid_metabolism,shared_cis_conserved,61.737,87.0,1.495,promoter,Tier_1_HighConfidence,28.8,0.611,promoter,Tier_2_Validate,True,0.068
+Mycbpap,Mycbp associated protein,other,shared_cis_conserved,61.575,104.9,1.112,proximal,Tier_1_HighConfidence,39.9,0.962,proximal,Tier_2_Validate,True,0.0
+Dhfr,dihydrofolate reductase,other,shared_cis_conserved,59.652,44.3,0.496,proximal,Tier_2_Validate,121.0,1.478,proximal,Tier_1_HighConfidence,True,1.0
+RT1-CE2,"RT1 class I, locus CE2",other,shared_cis_conserved,59.194,28.0,0.455,promoter,Tier_2_Validate,73.7,2.235,distal_cis,Tier_1_HighConfidence,True,1.001
+Retsat,retinol saturase,other,shared_cis_conserved,57.997,46.6,-0.48,proximal,Tier_2_Validate,109.7,-1.267,proximal,Tier_1_HighConfidence,True,0.0
+Dppa4,developmental pluripotency associated 4,other,shared_cis_conserved,57.957,56.3,-1.098,promoter,Tier_1_HighConfidence,24.8,-0.761,promoter,Tier_2_Validate,True,0.0
+RT1-T24-3,"RT1 class I, locus T24, gene 3",other,shared_cis_conserved,57.692,83.3,1.003,proximal,Tier_1_HighConfidence,24.8,0.681,proximal,Tier_2_Validate,True,0.0
+Rtel1,regulator of telomere elongation helicase 1,other,shared_cis_conserved,57.241,92.5,-0.684,proximal,Tier_1_HighConfidence,41.9,-0.757,proximal,Tier_2_Validate,True,0.0
+Hbb-b1,"hemoglobin, beta adult major chain",other,shared_cis_conserved,57.216,49.3,1.123,proximal,Tier_2_Validate,64.2,1.22,proximal,Tier_2_Validate,True,0.0
+RT1-CE13,"RT1 class I, locus CE13",other,shared_cis_conserved,57.112,39.0,0.55,proximal,Tier_2_Validate,67.6,2.232,distal_cis,Tier_1_HighConfidence,True,1.079
+Ptgr1,prostaglandin reductase 1,other,shared_cis_conserved,56.831,57.2,-0.938,promoter,Tier_2_Validate,42.9,-0.652,promoter,Tier_2_Validate,True,0.0
+Acot5,acyl-CoA thioesterase 5,lipid_metabolism,shared_cis_conserved,56.171,59.6,0.985,proximal,Tier_2_Validate,35.6,0.836,proximal,Tier_2_Validate,True,0.0
+Ces1f,carboxylesterase 1F,other,shared_cis_conserved,56.015,71.2,0.935,proximal,Tier_1_HighConfidence,27.9,0.629,proximal,Tier_2_Validate,True,0.0
+Timd4,T-cell immunoglobulin and mucin domain containing 4,immune,shared_cis_conserved,55.914,20.2,-0.523,proximal,Tier_2_Validate,53.7,-1.547,promoter,Tier_2_Validate,True,0.163
+Kif15,kinesin family member 15,other,shared_cis_conserved,55.633,72.5,-0.713,proximal,Tier_2_Validate,56.5,-1.237,proximal,Tier_2_Validate,True,0.0
+Vom2r44,vomeronasal 2 receptor 44,signaling,shared_cis_conserved,55.232,78.0,0.613,distal_cis,Tier_1_HighConfidence,46.7,1.243,proximal,Tier_2_Validate,True,2.035
+RT1-A1,"RT1 class Ia, locus A1",other,shared_cis_conserved,55.172,23.4,-0.696,distal_cis,Tier_2_Validate,48.1,-1.886,proximal,Tier_1_HighConfidence,True,0.836
+RT1-CE4,"RT1 class I, locus CE4",other,shared_cis_conserved,55.039,27.8,0.392,promoter,Tier_2_Validate,63.1,1.144,distal_cis,Tier_2_Validate,True,1.401
+Asrgl1,asparaginase and isoaspartyl peptidase 1,proteolysis,shared_cis_conserved,54.917,67.7,-0.684,proximal,Tier_2_Validate,60.2,-0.773,proximal,Tier_2_Validate,True,0.0
+Rtn4ip1,reticulon 4 interacting protein 1,other,shared_cis_conserved,54.891,62.5,0.516,promoter,Tier_2_Validate,43.6,0.657,promoter,Tier_2_Validate,True,0.0
+Clybl,citramalyl-CoA lyase,lipid_metabolism,shared_cis_conserved,54.36,68.6,-0.614,proximal,Tier_2_Validate,56.1,-0.837,proximal,Tier_2_Validate,True,0.0
+St6galnac2,"ST6 N-acetylgalactosaminide alpha-2,6-sialyltransferase 2",lipid_metabolism,shared_cis_conserved,53.172,33.4,-0.626,promoter,Tier_2_Validate,29.9,-0.925,promoter,Tier_2_Validate,True,0.0
+Shbg,sex hormone binding globulin,other,shared_cis_conserved,53.17,41.4,-0.544,promoter,Tier_2_Validate,21.6,-0.675,promoter,Tier_2_Validate,True,0.0
+Lyc2,lysozyme C type 2,other,shared_cis_flip,53.149,131.8,3.241,proximal,Tier_1_HighConfidence,120.9,-2.09,proximal,Tier_1_HighConfidence,False,0.0
+Slc16a5,solute carrier family 16 member 5,other,shared_cis_conserved,53.078,33.8,0.83,proximal,Tier_2_Validate,32.1,1.288,proximal,Tier_2_Validate,True,0.542
+Calr3,calreticulin 3,other,shared_cis_conserved,53.062,51.4,0.43,promoter,Tier_2_Validate,43.1,0.577,promoter,Tier_2_Validate,True,0.0
+Tmem116,transmembrane protein 116,other,shared_cis_conserved,52.944,23.1,-0.388,proximal,Tier_2_Validate,56.0,-1.357,proximal,Tier_2_Validate,True,0.0
+Nat8f2,N-acetyltransferase 8 (GCN5-related) family member 2,lipid_metabolism,shared_cis_conserved,52.796,41.0,0.97,proximal,Tier_2_Validate,25.6,0.522,proximal,Tier_2_Validate,True,0.625
+Siglec5,sialic acid binding Ig-like lectin 5,other,shared_cis_conserved,52.705,44.5,-0.585,proximal,Tier_2_Validate,44.9,-1.272,distal_cis,Tier_2_Validate,True,0.513
+Trim45,tripartite motif-containing 45,other,shared_cis_conserved,52.664,39.9,-0.487,proximal,Tier_2_Validate,60.0,-0.928,proximal,Tier_2_Validate,True,0.0
+Fntb,"farnesyltransferase, CAAX box, subunit beta",lipid_metabolism,shared_cis_conserved,52.539,40.2,-0.441,promoter,Tier_2_Validate,37.5,-0.977,promoter,Tier_2_Validate,True,0.0
+Spaca1,sperm acrosome associated 1,other,shared_cis_conserved,52.238,36.5,0.677,proximal,Tier_2_Validate,50.0,0.748,proximal,Tier_2_Validate,True,0.504
+Tmem14a,transmembrane protein 14A,other,shared_cis_conserved,52.045,37.3,-0.637,distal_cis,Tier_2_Validate,51.7,-1.827,distal_cis,Tier_1_HighConfidence,True,0.0
+Uggt2,UDP-glucose glycoprotein glucosyltransferase 2,lipid_metabolism,shared_cis_conserved,51.239,24.2,0.291,proximal,Tier_2_Validate,49.3,1.124,proximal,Tier_2_Validate,True,0.0
+Ccdc77,coiled-coil domain containing 77,other,shared_cis_conserved,50.778,38.1,-0.535,proximal,Tier_2_Validate,31.9,-0.9,proximal,Tier_2_Validate,True,0.0
+Ecd,ecdysoneless cell cycle regulator,other,shared_cis_conserved,50.663,34.3,-0.328,proximal,Tier_2_Validate,54.1,-0.673,proximal,Tier_2_Validate,True,0.561
+Cntn1,contactin 1,other,shared_cis_conserved,50.592,23.6,0.663,proximal,Tier_2_Validate,20.0,0.728,proximal,Tier_2_Validate,True,0.317
+Ggh,gamma-glutamyl hydrolase,other,shared_cis_conserved,50.53,32.2,-0.35,promoter,Tier_2_Validate,24.9,-0.493,proximal,Tier_2_Validate,True,0.49
+Prim2,DNA primase subunit 2,other,shared_cis_conserved,50.437,41.4,-0.464,proximal,Tier_2_Validate,25.3,-0.703,proximal,Tier_2_Validate,True,0.694
+RT1-CE14,"RT1 class I, locus CE14",other,shared_cis_flip,45.787,114.4,1.384,proximal,Tier_1_HighConfidence,21.5,-1.334,promoter,Tier_2_Validate,False,0.391
+RT1-A3,"RT1 class I, locus A3",other,shared_cis_flip,45.599,60.7,0.635,proximal,Tier_2_Validate,103.4,-3.372,proximal,Tier_1_HighConfidence,False,0.322
+Brinp3,BMP/retinoic acid inducible neural specific 3,other,shared_cis_flip,44.095,98.0,1.827,proximal,Tier_1_HighConfidence,24.9,-0.557,proximal,Tier_2_Validate,False,0.0
+Cbr1l1,carbonyl reductase 1 like 1,other,shared_cis_flip,42.929,70.3,-1.69,distal_cis,Tier_1_HighConfidence,56.9,2.322,promoter,Tier_1_HighConfidence,False,1.376
+RT1-CE11,"RT1 class I, locus CE11",other,shared_cis_flip,42.792,87.7,1.746,distal_cis,Tier_1_HighConfidence,31.6,-0.955,proximal,Tier_2_Validate,False,1.792
+Tnfrsf8,TNF receptor superfamily member 8,signaling,tissue_specific,41.709,137.1,2.776,proximal,Tier_1_HighConfidence,,,,,False,
+Dmkn,dermokine,other,tissue_specific,41.451,123.7,-2.535,promoter,Tier_1_HighConfidence,,,,,False,
+Cbr1l2,carbonyl reductase 1 like 2,other,shared_cis_flip,41.438,49.3,-2.285,proximal,Tier_1_HighConfidence,30.5,1.389,proximal,Tier_2_Validate,False,0.0
+P2rx5,purinergic receptor P2X 5,signaling,tissue_specific,40.275,,,,,144.7,-3.735,proximal,Tier_1_HighConfidence,False,
+Duoxa1,dual oxidase maturation factor 1,other,shared_cis_flip,40.029,20.8,0.348,promoter,Tier_2_Validate,72.9,-1.548,promoter,Tier_1_HighConfidence,False,0.001
+Clca2,chloride channel accessory 5,other,tissue_specific,39.86,,,,,118.8,3.703,promoter,Tier_1_HighConfidence,False,
+Ugt2b,UDP-glucuronosyltransferase 2B2,lipid_metabolism,tissue_specific,39.82,,,,,109.5,-4.76,proximal,Tier_1_HighConfidence,False,
+Bin2a,beta-galactosidase-like protein,other,tissue_specific,39.729,116.9,-2.755,proximal,Tier_1_HighConfidence,,,,,False,
+RT1-CE1,"RT1 class I, locus1",other,shared_cis_flip,39.106,81.1,1.009,distal_cis,Tier_1_HighConfidence,23.5,-0.737,proximal,Tier_2_Validate,False,1.992
+Sbsn,suprabasin,other,tissue_specific,38.914,133.5,-1.705,promoter,Tier_1_HighConfidence,,,,,False,
+Ccdc168,coiled-coil domain containing 168,other,shared_cis_flip,38.076,71.4,0.98,proximal,Tier_1_HighConfidence,22.8,-0.66,proximal,Tier_2_Validate,False,0.753
+Uts2b,urotensin 2B,other,tissue_specific,37.733,121.1,2.181,proximal,Tier_1_HighConfidence,,,,,False,
+Cyp2d1,"cytochrome P450, family 2, subfamily d, polypeptide 1",other,tissue_specific,37.245,106.1,1.921,promoter,Tier_1_HighConfidence,,,,,False,
+Igfn1,immunoglobulin-like and fibronectin type III domain containing 1,immune,tissue_specific,37.233,,,,,92.6,3.601,promoter,Tier_1_HighConfidence,False,
+Mlc1,modulator of VRAC current 1,other,tissue_specific,36.36,,,,,98.3,-3.077,promoter,Tier_1_HighConfidence,False,
+Mpped1,metallophosphoesterase domain containing 1,other,tissue_specific,36.31,,,,,122.3,-2.242,promoter,Tier_1_HighConfidence,False,
+Acnat2,acyl-coenzyme A amino acid N-acyltransferase 2,lipid_metabolism,tissue_specific,36.109,,,,,128.0,-1.972,promoter,Tier_1_HighConfidence,False,
+RT1-M1-2,"RT1 class I, locus M1, gene 2",other,tissue_specific,35.776,117.9,-1.783,proximal,Tier_1_HighConfidence,,,,,False,
+Alb,albumin,other,tissue_specific,34.975,100.8,-1.495,promoter,Tier_1_HighConfidence,,,,,False,
+Cbr1,carbonyl reductase 1,other,tissue_specific,34.868,96.1,1.575,promoter,Tier_1_HighConfidence,,,,,False,
+Serpinb1b,"serine (or cysteine) peptidase inhibitor, clade B, member 1b",proteolysis,tissue_specific,34.306,85.1,2.168,proximal,Tier_1_HighConfidence,,,,,False,
+Cacna1i,calcium voltage-gated channel subunit alpha1 I,other,tissue_specific,33.567,80.8,-1.607,promoter,Tier_1_HighConfidence,,,,,False,
+Adh6,alcohol dehydrogenase 6 (class V),lipid_metabolism,tissue_specific,33.546,,,,,80.4,-3.378,proximal,Tier_1_HighConfidence,False,
+Acnat1,acyl-coenzyme A amino acid N-acyltransferase 1,lipid_metabolism,tissue_specific,33.512,,,,,90.5,3.022,proximal,Tier_1_HighConfidence,False,
+Tnfrsf11a,zinc finger CCHC-type containing 2,transcription_chromatin,tissue_specific,33.386,,,,,94.3,-2.089,promoter,Tier_1_HighConfidence,False,
+Ptprt,"protein tyrosine phosphatase, receptor type, T",signaling,tissue_specific,32.925,,,,,75.3,2.561,promoter,Tier_1_HighConfidence,False,
+Cym,chymosin,other,tissue_specific,32.9,96.4,-1.576,proximal,Tier_1_HighConfidence,,,,,False,
+Fam163a,"family with sequence similarity 163, member A",other,tissue_specific,32.897,93.7,-1.636,proximal,Tier_1_HighConfidence,,,,,False,
+Grifin,galectin-related inter-fiber protein,other,tissue_specific,32.871,93.5,1.154,promoter,Tier_1_HighConfidence,,,,,False,
+Slco1a5,"solute carrier organic anion transporter family, member 1A5",other,tissue_specific,32.655,,,,,92.5,-1.874,promoter,Tier_1_HighConfidence,False,
+Nupr1,"nuclear protein 1, transcriptional regulator",transcription_chromatin,tissue_specific,32.574,95.3,-1.042,promoter,Tier_1_HighConfidence,,,,,False,
+Plaat1,phospholipase A and acyltransferase 1,lipid_metabolism,tissue_specific,32.451,,,,,100.4,-2.284,proximal,Tier_1_HighConfidence,False,
+Bco1,beta-carotene oxygenase 1,other,tissue_specific,32.439,,,,,121.7,-1.555,proximal,Tier_1_HighConfidence,False,
+Mup4,major urinary protein 4,other,tissue_specific,32.436,,,,,64.1,-4.647,distal_cis,Tier_1_HighConfidence,False,
+Scn8a,sodium voltage-gated channel alpha subunit 8,other,tissue_specific,32.42,94.3,-1.508,proximal,Tier_1_HighConfidence,,,,,False,
+Folr1,folate receptor alpha,signaling,tissue_specific,32.344,114.8,1.749,distal_cis,Tier_1_HighConfidence,,,,,False,
+Calca,calcitonin-related polypeptide alpha,other,tissue_specific,32.032,73.3,1.407,promoter,Tier_1_HighConfidence,,,,,False,
+Nqo1,NAD(P)H quinone dehydrogenase 1,lipid_metabolism,tissue_specific,31.496,,,,,93.4,1.405,promoter,Tier_1_HighConfidence,False,
+Smim40,small integral membrane protein 40,other,tissue_specific,31.468,,,,,81.6,-1.796,promoter,Tier_1_HighConfidence,False,
+RT1-Db2,"RT1 class II, locus Db2",other,tissue_specific,31.448,75.8,1.691,proximal,Tier_1_HighConfidence,,,,,False,
+Cdh26,cadherin 26,other,tissue_specific,31.311,94.5,-1.237,proximal,Tier_1_HighConfidence,,,,,False,
+Atp6v0d2,ATPase H+ transporting V0 subunit D2,other,tissue_specific,31.21,,,,,77.9,1.824,promoter,Tier_1_HighConfidence,False,
+Gucy2e,"guanylate cyclase 2D, retinal",signaling,tissue_specific,31.184,86.8,1.38,proximal,Tier_1_HighConfidence,,,,,False,
+Hs3st5,heparan sulfate-glucosamine 3-sulfotransferase 5,lipid_metabolism,tissue_specific,31.071,,,,,103.7,2.784,distal_cis,Tier_1_HighConfidence,False,
+Telo2,telomere maintenance 2,other,tissue_specific,30.942,97.9,-1.072,proximal,Tier_1_HighConfidence,,,,,False,
+Npy4r,neuropeptide Y receptor Y4,signaling,tissue_specific,30.75,65.8,-1.268,promoter,Tier_1_HighConfidence,,,,,False,
+Ttll9,tubulin tyrosine ligase like 9,other,tissue_specific,30.702,,,,,76.7,-1.673,promoter,Tier_1_HighConfidence,False,
+Tmem178a,transmembrane protein 178A,other,tissue_specific,30.528,81.6,-0.859,promoter,Tier_1_HighConfidence,,,,,False,
+Spmap2l,sperm microtubule associated protein 2 like,other,tissue_specific,30.501,68.6,-1.145,promoter,Tier_1_HighConfidence,,,,,False,
+Hist2h2aa2,histone cluster 2 H2A family member A2,transcription_chromatin,tissue_specific,30.317,47.0,1.587,promoter,Tier_1_HighConfidence,,,,,False,
+Anxa5,annexin A5,other,tissue_specific,30.313,,,,,104.9,-1.323,proximal,Tier_1_HighConfidence,False,
+Albfm1,albumin superfamily member 1,other,tissue_specific,30.306,65.5,-1.168,promoter,Tier_1_HighConfidence,,,,,False,
+Rgs22,regulator of G-protein signaling 22,other,tissue_specific,30.239,90.3,-1.074,proximal,Tier_1_HighConfidence,,,,,False,
+Dsg1,desmoglein 1,other,tissue_specific,30.166,,,,,77.5,-2.199,proximal,Tier_1_HighConfidence,False,
+Naalad2,N-acetylated alpha-linked acidic dipeptidase 2,proteolysis,tissue_specific,29.864,98.7,-0.795,proximal,Tier_1_HighConfidence,,,,,False,
+Ms4a12,membrane spanning 4-domains A12,other,tissue_specific,29.843,58.6,-1.212,promoter,Tier_1_HighConfidence,,,,,False,
+Igsf9b,"immunoglobulin superfamily, member 9B",immune,tissue_specific,29.803,78.5,1.235,proximal,Tier_1_HighConfidence,,,,,False,
+Tmsb10,"thymosin, beta 10",other,tissue_specific,29.796,98.9,-0.774,proximal,Tier_1_HighConfidence,,,,,False,
+Micb,MHC class I polypeptide-related sequence B,other,tissue_specific,29.784,99.4,0.76,proximal,Tier_1_HighConfidence,,,,,False,
+Csmd2,CUB and Sushi multiple domains 2,other,tissue_specific,29.531,72.4,1.307,proximal,Tier_1_HighConfidence,,,,,False,
+Acadsb,"acyl-CoA dehydrogenase, short/branched chain",lipid_metabolism,tissue_specific,29.415,99.1,0.678,proximal,Tier_1_HighConfidence,,,,,False,
+Serpina12,serpin family A member 12,other,tissue_specific,29.001,52.3,-1.632,proximal,Tier_1_HighConfidence,,,,,False,
+Krtcap3,keratinocyte associated protein 3,other,tissue_specific,28.934,,,,,66.6,1.348,promoter,Tier_1_HighConfidence,False,
+Slc2a12,solute carrier family 2 member 12,other,tissue_specific,28.93,,,,,76.0,-1.027,promoter,Tier_1_HighConfidence,False,
+Unc5a,unc-5 netrin receptor A,signaling,tissue_specific,28.912,72.9,1.147,proximal,Tier_1_HighConfidence,,,,,False,
+Lcn3,lipocalin 3,other,tissue_specific,28.795,,,,,63.3,2.164,proximal,Tier_1_HighConfidence,False,
+Pira12,paired-Ig-like receptor A12,signaling,tissue_specific,28.673,75.9,1.022,proximal,Tier_1_HighConfidence,,,,,False,
+Meiob,meiosis specific with OB-fold,other,tissue_specific,28.545,,,,,59.4,-1.446,promoter,Tier_1_HighConfidence,False,
+Tmem106c,transmembrane protein 106C,other,tissue_specific,28.477,91.4,-0.626,proximal,Tier_1_HighConfidence,,,,,False,
+Cd300ld,Cd300 molecule-like family member D,other,tissue_specific,28.419,65.2,-1.202,proximal,Tier_1_HighConfidence,,,,,False,
+Slc7a7,solute carrier family 7 member 7,other,tissue_specific,28.385,89.0,0.658,proximal,Tier_1_HighConfidence,,,,,False,
+Agmo,alkylglycerol monooxygenase,other,tissue_specific,28.262,84.0,0.741,proximal,Tier_1_HighConfidence,,,,,False,
+Aox2,aldehyde oxidase 2,other,tissue_specific,28.242,,,,,63.0,1.965,proximal,Tier_1_HighConfidence,False,
+Lsamp,limbic system-associated membrane protein,other,tissue_specific,28.238,105.5,-0.972,distal_cis,Tier_1_HighConfidence,,,,,False,
+Slc13a2,solute carrier family 13 member 2,other,tissue_specific,28.235,,,,,83.5,1.265,proximal,Tier_1_HighConfidence,False,
+Or6k2,olfactory receptor family 6 subfamily K member 2,signaling,tissue_specific,27.98,65.8,1.083,proximal,Tier_1_HighConfidence,,,,,False,
+C5h8orf88,similar to human chromosome 8 open reading frame 88,other,tissue_specific,27.978,53.6,-1.357,proximal,Tier_1_HighConfidence,,,,,False,
+Dsg3,desmoglein 3,other,tissue_specific,27.954,58.5,1.241,proximal,Tier_1_HighConfidence,,,,,False,
+Clec2l,"C-type lectin domain family 2, member L",other,tissue_specific,27.892,,,,,79.6,1.268,proximal,Tier_1_HighConfidence,False,
+Elavl2,ELAV like RNA binding protein 2,other,tissue_specific,27.746,,,,,68.6,1.587,proximal,Tier_1_HighConfidence,False,
+Lilrb1,leukocyte immunoglobulin like receptor B1,immune,tissue_specific,27.665,73.9,0.825,proximal,Tier_1_HighConfidence,,,,,False,
+Btc,betacellulin,other,tissue_specific,27.54,61.9,-1.065,proximal,Tier_1_HighConfidence,,,,,False,
+Vom2r16,"vomeronasal 2 receptor, 16",signaling,tissue_specific,27.489,61.4,1.064,proximal,Tier_1_HighConfidence,,,,,False,
+Btnl8,butyrophilin-like 8,other,tissue_specific,27.485,53.9,-1.232,proximal,Tier_1_HighConfidence,,,,,False,
+Sez6l,seizure related 6 homolog like,other,tissue_specific,27.341,40.1,1.508,proximal,Tier_1_HighConfidence,,,,,False,
+RT1-CE7,"RT1 class I, locus CE7",other,tissue_specific,27.243,40.5,2.196,distal_cis,Tier_1_HighConfidence,,,,,False,
+RT1-CE6,"RT1 class I, locus CE6",other,tissue_specific,27.216,,,,,69.0,1.373,proximal,Tier_1_HighConfidence,False,
+Ebf4,EBF family member 4,other,tissue_specific,27.187,,,,,68.3,-1.386,proximal,Tier_1_HighConfidence,False,
+Miox,myo-inositol oxygenase,other,tissue_specific,27.147,,,,,63.8,1.524,proximal,Tier_1_HighConfidence,False,
+Tnr,tenascin R,other,tissue_specific,27.1,25.0,1.79,proximal,Tier_1_HighConfidence,,,,,False,
+Snora26,"small nucleolar RNA, H/ACA box 26",other,tissue_specific,27.099,39.6,-1.461,proximal,Tier_1_HighConfidence,,,,,False,
+Inava,innate immunity activator,other,tissue_specific,27.035,,,,,66.9,-1.376,proximal,Tier_1_HighConfidence,False,
+Atp2b2,ATPase plasma membrane Ca2+ transporting 2,other,tissue_specific,26.092,64.6,-1.377,distal_cis,Tier_1_HighConfidence,,,,,False,
+RT1-CE3,"RT1 class I, locus CE3",other,tissue_specific,25.044,64.7,1.123,distal_cis,Tier_1_HighConfidence,,,,,False,
+Macrod2,mono-ADP ribosylhydrolase 2,other,tissue_specific,24.795,66.4,-1.025,distal_cis,Tier_1_HighConfidence,,,,,False,
+Gvinp1,"GTPase, very large interferon inducible 1",immune,tissue_specific,24.642,49.8,1.362,distal_cis,Tier_1_HighConfidence,,,,,False,

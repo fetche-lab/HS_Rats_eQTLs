@@ -1,0 +1,39 @@
+# Temporary / legacy folder
+hs_tmp/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.nav
+*.snm
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.bbl
+*.blg
+*.run.xml
+
+# Editor / OS
+.~lock.*
+*~
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Jupyter (if ever used)
+.ipynb_checkpoints/
+
+# Large raw sequencing / BAM files (not present, but good practice)
+*.bam
+*.bai
+*.fastq
+*.fastq.gz
