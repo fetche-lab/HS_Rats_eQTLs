@@ -45,7 +45,7 @@ All of the following was read from the GeneNetwork 2 download interface and the 
 embedded in the rlog tables; nothing here is inferred unless explicitly marked.
 
 **WHO** — mapping and pre-filtering performed by the GeneNetwork 2 compute pipeline;
-data set assembled by **Prof Pjotr Prins** / GeneNetwork team. Run initiated by
+data set assembled by the **GeneNetwork** team. Run initiated by
 **Felix Lisso**.
 
 **WHEN** — rlog tables downloaded **2026-05-26** by Felix Lisso. Upstream GEMMA mapping
