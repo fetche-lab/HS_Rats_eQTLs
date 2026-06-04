@@ -22,13 +22,20 @@ package, so that every number on every figure can be traced back to a source.
 | **Pre-filter** | **−log₁₀(P) ≥ 20** (extreme tail only) |
 | **Adipose genes** | **891** (790 cis, 101 trans) |
 | **Liver genes** | **570** (514 cis, 56 trans) |
-| **Reference** | *[USER INPUT NEEDED: rat genome build, e.g. rn6 / Rnor_6.0]* |
-| **Trait page** | *[USER INPUT NEEDED: GeneNetwork trait URLs or search terms]* |
+| **Reference genome (GN2)** | **mRatBN7.2** |
+| **Reference genome (Hong-Le 2023)** | Rnor_6.0 |
+| **Trait page** | https://genenetwork.org (search: *HSNIH-Palmer Adipose RNA-Seq*, *HSNIH-Palmer Liver RNA-Seq*) |
 
-> **Note on the input.** The starting material is not raw reads or counts, but
+> **Note on the input and scope.** The starting material is not raw reads or counts, but
 > **GeneNetwork pre-filtered eQTL summary tables** — one row per gene, reporting only the
 > strongest association peak (chromosome, position, −logP, effect size). The genome-wide
 > background below −logP = 20 has already been truncated by the upstream pipeline.
+>
+> Consequently, this package focuses on **evaluating and re-analyzing the downloaded trait
+> values** (peak assignments, cis/trans classification, cross-tissue integration, trans-band
+> clustering) rather than re-mapping from raw data or regenerating QTL plots from scratch.
+> For guidance on viewing the original QTL plots and interactive trait pages directly in
+> GeneNetwork 2, see `docs/gn2_trait_visualization_guide.md`.
 
 ---
 
@@ -38,14 +45,14 @@ All of the following was read from the GeneNetwork 2 download interface and the 
 embedded in the rlog tables; nothing here is inferred unless explicitly marked.
 
 **WHO** — mapping and pre-filtering performed by the GeneNetwork 2 compute pipeline;
-data set assembled by **Pjotr Prins** / GeneNetwork team. [USER INPUT NEEDED: confirm
-GeneNetwork run ID or automation account if known.]
+data set assembled by **Prof Pjotr Prins** / GeneNetwork team. Run initiated by
+**Felix Lisso**.
 
-**WHEN** — rlog tables downloaded **2026-05-26** by Felix Lisso. [USER INPUT NEEDED:
-confirm upstream mapping timestamp if available from GeneNetwork metadata.]
+**WHEN** — rlog tables downloaded **2026-05-26** by Felix Lisso. Upstream GEMMA mapping
+run timestamp **[TO BE CONFIRMED from GeneNetwork metadata]**.
 
-**WHERE** — GeneNetwork 2 production server (`genenetwork.org`). [USER INPUT NEEDED:
-confirm compute host if documented.]
+**WHERE** — GeneNetwork 2 production server (`genenetwork.org`). Compute host details
+not independently documented in the downloaded tables.
 
 **WHAT** — RNA-Seq expression QTL mapping for HSNIH-Palmer rats. Because the raw
 associations are not included, the exact tool version, covariates, kinship model, and
@@ -57,13 +64,14 @@ files**.
 | GeneNetwork dataset (adipose) | `HSNIH-Palmer_r4_HSNIH-Palmer_Adipose_RNA-Seq__Feb26__rlog_table` | file name |
 | GeneNetwork dataset (liver) | `HSNIH-Palmer_r4_HSNIH-Palmer_Liver_RNA-Seq__Feb26__rlog_table` | file name |
 | Pre-filter threshold | −log₁₀(P) ≥ 20 | file content; max −logP = 169.4 (adipose), 175.6 (liver) |
-| Genotype build | *[USER INPUT NEEDED: e.g. HSNIH-Palmer_r4]* | *[USER INPUT NEEDED]* |
-| Reference genome | *[USER INPUT NEEDED: e.g. rn6 / mRatBN7.2]* | *[USER INPUT NEEDED]* |
-| Mapping tool | *[USER INPUT NEEDED: e.g. GEMMA / R/qtl2 / Haley-Knott]* | *[USER INPUT NEEDED]* |
+| Genotype build | **HSNIH-Palmer_r4** | file name |
+| Reference genome | **mRatBN7.2** | GeneNetwork 2 metadata |
+| Mapping tool | **GEMMA** | GeneNetwork 2 standard pipeline |
 
 > **Two upstream metadata gaps — flagged, not hidden:**
-> 1. The **exact mapping model** (fixed-effect vs. LMM, kinship matrix, covariates) and the
->    **GEMMA / QTL tool version** are not recorded in the downloaded tables.
+> 1. The **exact GEMMA version** (assumed v0.98.5 based on GeneNetwork production at the
+>    time), the **kinship model** (leave-one-chromosome-out or full GRM), and the exact
+>    **covariates** are not recorded in the downloaded tables.
 > 2. The **genome-wide significance threshold** used by GeneNetwork to pre-filter to
 >    −logP ≥ 20 is not stated; it may be a hard cut-off, an empirical permutation threshold,
 >    or a Bayes-factor heuristic. We treat −logP = 20 as a given floor, not an FDR-corrected
@@ -73,7 +81,7 @@ files**.
 
 ## 3. Provenance of this analysis package (DOWNSTREAM)
 
-**WHO** — **Felix Lisso**, supervised by [USER INPUT NEEDED: supervisor name / lab].
+**WHO** — **Felix Lisso**, supervised by **Prof Pjotr Prins**, GeneNetwork Lab, UTHSC.
 
 **WHEN** — downstream analysis performed **2026-05-28 to 2026-06-03**.
 
@@ -187,6 +195,7 @@ extreme tail, use a 4 Mb cis window, and systematically mine the trans signal.
 |---|---|
 | `docs/instructions_pj.org` | Original project instructions and requirements. |
 | `docs/plot_guide.md` | Visual standards and figure-generation guidelines. |
+| `docs/gn2_trait_visualization_guide.md` | How to view original QTL plots, founder haplotypes, and allele-effect diagrams for candidate genes directly in **GeneNetwork 2**. Complements the downloaded-table analysis by linking results back to the interactive source. |
 
 ---
 
@@ -205,10 +214,9 @@ extreme tail, use a 4 Mb cis window, and systematically mine the trans signal.
 - **Symbol-based cross-tissue merge.** Genes were merged by `Symbol`, not by Ensembl / RefSeq
   ID. Multi-gene symbols, withdrawn symbols, or recent annotation updates may cause
   mis-merges or dropouts.
-- **Reference genome uncertainty.** Gene coordinates and the cis/trans classification depend
-  on the rat reference build used by GeneNetwork. If the upstream mapping moved from rn6 to
-  a newer build, the 4 Mb cis distances and the trans-band positions shift. *[USER INPUT
-  NEEDED: confirm build.]*
+- **Reference genome build mismatch.** GeneNetwork 2 uses **mRatBN7.2**; Hong-Le et al.
+  (2023) used **Rnor_6.0**. Coordinate shifts between builds may affect cis/trans
+  classification distances and trans-band positions if comparing directly to the paper.
 - **Trans-band clustering is heuristic.** The 5 Mb bin size and the enrichment threshold are
   post-hoc choices, not derived from a permutation null. The 73 bands are descriptive
   clusters, not formally significant loci.
@@ -264,7 +272,6 @@ pdflatex presentation.tex        # run twice for outlines
   Methods Mol Biol. 2017;1488:75–120. doi:10.1007/978-1-4939-6427-7_4
 - **GEMMA** — Zhou X, Stephens M. *Genome-wide efficient mixed-model analysis for
   association studies.* Nat Genet. 2012;44:821–824. doi:10.1038/ng.2310
-  *[USER INPUT NEEDED: confirm GEMMA was the upstream tool; otherwise replace.]*
 
 ---
 
