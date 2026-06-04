@@ -278,4 +278,4 @@ pdflatex presentation.tex        # run twice for outlines
 
 *Prepared 2026-06-03 by Felix Lisso. Upstream pre-filtered eQTL tables from GeneNetwork 2
 (HSNIH-Palmer_r4 adipose / liver RNA-Seq). Downstream analysis and reporting by Felix Lisso
-with Claude (Opus 4.8).*
+with AI assistance.*
