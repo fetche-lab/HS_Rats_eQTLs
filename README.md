@@ -194,7 +194,6 @@ extreme tail, use a 4 Mb cis window, and systematically mine the trans signal.
 ### Documentation
 | File | What it is |
 |---|---|
-| `docs/instructions_pj.org` | Original project instructions and requirements. |
 | `docs/plot_guide.md` | Visual standards and figure-generation guidelines. |
 | `docs/gn2_trait_visualization_guide.md` | How to view original QTL plots, founder haplotypes, and allele-effect diagrams for candidate genes directly in **GeneNetwork 2**. Complements the downloaded-table analysis by linking results back to the interactive source. |
 
