@@ -1,6 +1,9 @@
 # Temporary / legacy folder
 hs_tmp/
 
+# Private project instructions (kept locally, not in repo)
+docs/instructions_pj.org
+
 # Python
 __pycache__/
 *.py[cod]
