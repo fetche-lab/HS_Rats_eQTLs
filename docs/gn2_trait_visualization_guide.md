@@ -15,8 +15,9 @@ While the main analysis package works from **downloaded pre-filtered tables**, t
    - **Group:** *HSNIH-Palmer*
    - **Type:** *mRNA*
    - **Dataset:**
-     - For adipose: `HSNIH-Palmer Adipose RNA-Seq (Feb26) rlog`
-     - For liver: `HSNIH-Palmer Liver RNA-Seq (Feb26) rlog`
+     - For adipose: **`HSNIH-Palmer Adipose RNA-Seq (Feb26) rlog`**
+     - For liver: **`HSNIH-Palmer Liver RNA-Seq (Feb26) rlog`**
+   - **Genotype build:** `HSNIH-Palmer_r4 Genotypes` (used for the GEMMA mapping)
 3. Enter a **gene symbol** (e.g. `Grk5`, `Krtcap3`, `LOC691532`) in the **"Get Any"** search box and click **Search**.
 4. Click the **trait ID** (e.g. `10469` or similar) to open the trait page.
 5. On the trait page, click **"Mapping"** to launch the QTL genome scan.

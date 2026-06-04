@@ -61,8 +61,9 @@ files**.
 
 | Parameter | Value | Source |
 |---|---|---|
-| GeneNetwork dataset (adipose) | `HSNIH-Palmer_r4_HSNIH-Palmer_Adipose_RNA-Seq__Feb26__rlog_table` | file name |
-| GeneNetwork dataset (liver) | `HSNIH-Palmer_r4_HSNIH-Palmer_Liver_RNA-Seq__Feb26__rlog_table` | file name |
+| GeneNetwork dataset (adipose) | `HSNIH-Palmer Adipose RNA-Seq (Feb26) rlog` | GN2 dataset name |
+| GeneNetwork dataset (liver) | `HSNIH-Palmer Liver RNA-Seq (Feb26) rlog` | GN2 dataset name |
+| Genotypes | `HSNIH-Palmer_r4 Genotypes` | GN2 dataset name |
 | Pre-filter threshold | −log₁₀(P) ≥ 20 | file content; max −logP = 169.4 (adipose), 175.6 (liver) |
 | Genotype build | **HSNIH-Palmer_r4** | file name |
 | Reference genome | **mRatBN7.2** | GeneNetwork 2 metadata |
@@ -136,8 +137,8 @@ extreme tail, use a 4 Mb cis window, and systematically mine the trans signal.
 ### Data
 | File | What it is |
 |---|---|
-| `data/adipose_rlog_table.csv` | GeneNetwork pre-filtered adipose eQTL summary table (rlog-transformed RNA-Seq). |
-| `data/liver_rlog_table.csv` | GeneNetwork pre-filtered liver eQTL summary table. |
+| `data/adipose_rlog_table.csv` | GeneNetwork pre-filtered adipose eQTL summary table. Source: **HSNIH-Palmer Adipose RNA-Seq (Feb26) rlog**. |
+| `data/liver_rlog_table.csv` | GeneNetwork pre-filtered liver eQTL summary table. Source: **HSNIH-Palmer Liver RNA-Seq (Feb26) rlog**. |
 
 ### Scripts
 | File | What it is |
