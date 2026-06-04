@@ -189,7 +189,7 @@ extreme tail, use a 4 Mb cis window, and systematically mine the trans signal.
 | `reports/eQTL_analysis_report.md` | Auto-generated markdown summary of tissue-specific eQTL analysis. |
 | `reports/cross_tissue_report.md` | Auto-generated markdown summary of cross-tissue integration. |
 | `reports/final_recommendations.md` | Actionable recommendations: Tier 1 validation, trans-band inspection, pangenomic proposal. |
-| `reports/supervisor_response.md` | Detailed response to supervisor feedback, including trans-band table and flagging rationale. |
+| `reports/updated_findings.md` | Updated analysis notes following supervisory feedback, including trans-band table, flagging rationale, and literature comparison. |
 
 ### Documentation
 | File | What it is |
