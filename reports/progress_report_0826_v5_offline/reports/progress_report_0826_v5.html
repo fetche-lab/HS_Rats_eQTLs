@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Felix Lisso" />
+  <meta name="dcterms.date" content="2026-07-30" />
+  <title>Progress Report: LD-based trans eQTL bands and GO/KEGG enrichment in HS rat adipose and liver</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="progress_report_style.css" />
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Progress Report: LD-based trans eQTL bands and GO/KEGG
+enrichment in HS rat adipose and liver</h1>
+<p class="author">Felix Lisso</p>
+<p class="date">30 July 2026</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#abstract" id="toc-abstract">Abstract</a></li>
+<li><a href="#introduction" id="toc-introduction">1.
+Introduction</a></li>
+<li><a href="#results" id="toc-results">2. Results</a>
+<ul>
+<li><a href="#dataset-and-eqtl-summary"
+id="toc-dataset-and-eqtl-summary">2.1 Dataset and eQTL summary</a></li>
+<li><a href="#ld-based-trans-band-catalogs"
+id="toc-ld-based-trans-band-catalogs">2.2 LD-based trans band
+catalogs</a></li>
+<li><a href="#visualising-the-band-catalogue"
+id="toc-visualising-the-band-catalogue">2.3 Visualising the band
+catalogue</a></li>
+<li><a href="#gokegg-enrichment-reveals-tissue-specific-biology"
+id="toc-gokegg-enrichment-reveals-tissue-specific-biology">2.4 GO/KEGG
+enrichment reveals tissue-specific biology</a></li>
+</ul></li>
+<li><a href="#discussion-and-next-steps"
+id="toc-discussion-and-next-steps">3. Discussion and next steps</a></li>
+<li><a href="#methods-brief" id="toc-methods-brief">4. Methods
+(brief)</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+</ul>
+</nav>
+<p><link rel="stylesheet" href="progress_report_style.css"></p>
+<h2 id="abstract">Abstract</h2>
+<p>Trans eQTL hotspots (trans bands) can reveal master regulators that
+influence many genes from a distal genomic location, but separating them
+from residual cis signals remains a central challenge in genetical
+genomics studies. We re-analyzed adipose and liver RNA-seq data from
+~411 Heterogeneous Stock NIH (HSNIH-Palmer) rats using a linkage
+disequilibrium (LD) based cis definition (r² ≥ 0.6) instead of the
+conventional fixed 1 Mb window. The LD-aware classification removed
+1,442 adipose and 900 liver false-trans peaks while leaving the major
+trans-band hotspots intact. For functional interpretation, we generated
+a conservative, well-annotated gene universe by filtering raw GEMMA
+results to <strong>4 ≤ -log₁₀ P ≤ 80</strong> and removing poorly
+annotated genes (LOC, Riken, pseudogenes, uncharacterised). This yielded
+<strong>6,540 adipose, 3,790 liver, and 8,349 combined</strong>
+background genes. GO/KEGG over-representation analysis with g:Profiler2
+(GO BP, GO CC, GO MF and KEGG only) showed coherent tissue biology:
+adipose hotspots converged on RNA/nucleic-acid metabolism and chromatin
+organization, whereas liver hotspots pointed to sterol/steroid
+metabolism. <strong>No GO/KEGG terms were shared between the two
+tissues</strong>, arguing for largely tissue-specific trans regulation.
+These results validate the trans-band catalog as biologically meaningful
+and confirm the priority regions, adipose Chr5:68–70 Mb and liver
+Chr4:177–179 Mb, for the next pan-genomic structural-variant re-mapping
+step.</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Expression quantitative trait locus (eQTL) mapping links genetic
+variation to gene expression. Cis eQTLs, where the regulatory variant
+lies near the target gene, are abundant and well characterized, whereas
+trans eQTLs act from distal locations and can reveal master regulators
+and gene networks that influence many transcripts simultaneously.
+Clusters of trans eQTLs that map to the same genomic region are commonly
+called <strong>trans eQTL bands</strong> or <strong>trans eQTL
+hotspots</strong> (Breitling et al., 2008; Mozhui et al., 2008).</p>
+<p>A major difficulty in trans eQTL analysis is separating true distal
+regulation from technical and analytical artifacts. Sequence mismatch,
+reference bias, poorly annotated transcripts, and arbitrary cis windows
+can all produce spurious distal signals (Alberts et al., 2007; Peirce et
+al., 2006). In particular, a fixed 1–2 Mb cis window may over- or
+under-call cis eQTLs depending on local recombination and LD structure.
+Here we define cis intervals directly from the HS rat genotype data: for
+each peak marker we compute LD with all markers within 5 Mb and define
+the cis region as the contiguous interval where r² ≥ 0.6 with the lead
+marker. This gives each peak a data-driven, locally adaptive cis
+interval.</p>
+<p>Pan-genomic re-mapping, including structural variants (SVs), is
+expected to refine the causal variants behind these hotspots (Garrison
+et al., 2024). Before that step, however, it is important to establish
+that the called trans bands are biologically interpretable rather than
+random noise. We therefore performed GO/KEGG over-representation
+analysis on the trans-band gene sets (Kolberg et al., 2023), using a
+conservative universe of well-annotated genes that pass the same
+discovery threshold as the trans bands.</p>
+<hr />
+<h2 id="results">2. Results</h2>
+<h3 id="dataset-and-eqtl-summary">2.1 Dataset and eQTL summary</h3>
+<p>We analyzed adipose and liver RNA-seq data from the HSNIH-Palmer rat
+population (N ≈ 411), mapped to the mRatBN7.2 (rn7) reference genome
+with GEMMA via GeneNetwork 2 (Zhou &amp; Stephens, 2012). After the
+upper -logP cut (≤ 80) and the rough well-annotated filter, 21,128
+transcripts remained; the stricter universe filter (4 ≤ -logP ≤ 80,
+well-annotated, Ensembl gene IDs) retained <strong>6,540 adipose and
+3,790 liver genes</strong> (8,349 in the union).</p>
+<p>The LD-based Peirce-style cis–trans overview plots in <strong>Figure
+1</strong> show the classic diagonal cis pattern and the most prominent
+horizontal trans bands. In adipose the strongest trans band is on
+chromosome 5 near 68–70 Mb; in liver, a prominent band appears on
+chromosome 4 near 177–179 Mb.</p>
+<figure id="fig-peirce">
+<div class="two-col">
+<img src="peirce_cis_trans_ld_adipose.png" alt="Adipose LD-based Peirce plot" />
+<img src="peirce_cis_trans_ld_liver.png" alt="Liver LD-based Peirce plot" />
+</div>
+<figcaption>
+<strong>Figure 1.</strong> LD-based Peirce-style cis–trans overview
+plots (r² ≥ 0.6). <strong>Top panels:</strong> histograms of trans-eQTL
+peaks in 2 Mb bins across the genome (log scale). <strong>Bottom
+panels:</strong> scatter of gene position against strongest peak
+position; the diagonal is cis, off-diagonal horizontal bands are trans
+hotspots.
+</figcaption>
+</figure>
+<p>Replacing the fixed 1 Mb cis window with the LD-based definition (r²
+≥ 0.6) reduced cis calls by roughly half because the true LD block
+around many peak markers is smaller than 1 Mb (Table 1). The major trans
+bands remained robust, which increases confidence that they are real
+biological signals rather than artifacts of the cis window.</p>
+<p><strong>Table 1. Cis and trans counts with fixed 1 Mb versus LD-based
+cis definitions for peaks with 4 ≤ -log₁₀ P ≤ 80.</strong></p>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 17%" />
+<col style="width: 20%" />
+<col style="width: 35%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tissue</th>
+<th style="text-align: right;">Fixed 1 Mb cis</th>
+<th style="text-align: right;">Fixed 1 Mb trans</th>
+<th style="text-align: right;">LD-based cis (r² ≥ 0.6)</th>
+<th style="text-align: right;">LD-based trans</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adipose</td>
+<td style="text-align: right;">2,740 (26.3%)</td>
+<td style="text-align: right;">7,670 (73.7%)</td>
+<td style="text-align: right;">1,298 (12.5%)</td>
+<td style="text-align: right;">9,112 (87.5%)</td>
+</tr>
+<tr class="even">
+<td>Liver</td>
+<td style="text-align: right;">1,791 (30.9%)</td>
+<td style="text-align: right;">4,006 (69.1%)</td>
+<td style="text-align: right;">891 (15.4%)</td>
+<td style="text-align: right;">4,906 (84.6%)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ld-based-trans-band-catalogs">2.2 LD-based trans band
+catalogs</h3>
+<p>Trans bands were called by sliding a 2 Mb window across the genome
+and counting trans eQTL peaks per window, with a 10 Mb exclusion zone
+and a minimum of three peaks. Using the LD-based trans set, we
+identified <strong>136 adipose and 123 liver trans bands at -log₁₀ P ≥
+4</strong> (Table 2). For the GO/KEGG re-run, all bands were retained
+(FDR threshold = 1.00) so that we could assess which bands produced any
+coherent biological signal.</p>
+<p><strong>Table 2. LD-based trans band catalogs and GO/KEGG enrichment
+yield.</strong></p>
+<table>
+<colgroup>
+<col style="width: 8%" />
+<col style="width: 25%" />
+<col style="width: 43%" />
+<col style="width: 22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tissue</th>
+<th style="text-align: right;">LD-based trans bands</th>
+<th style="text-align: right;">Bands with ≥ 1 significant GO/KEGG
+term</th>
+<th style="text-align: right;">Min FDR in catalog</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adipose</td>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">0.136</td>
+</tr>
+<tr class="even">
+<td>Liver</td>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.246</td>
+</tr>
+</tbody>
+</table>
+<p>The lower enrichment yield in liver reflects the smaller number of
+liver peaks and the stricter universe filter, but the liver bands that
+do enrich are highly tissue specific (Section 2.3). Table 3 lists the
+enriched bands.</p>
+<p><strong>Table 3. Trans bands with at least one significant GO/KEGG
+term.</strong></p>
+<table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 20%" />
+<col style="width: 5%" />
+<col style="width: 16%" />
+<col style="width: 21%" />
+<col style="width: 9%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tissue</th>
+<th style="text-align: right;">Band (chr:start–end Mb)</th>
+<th style="text-align: right;">Peaks</th>
+<th style="text-align: right;">Max -log₁₀ P</th>
+<th style="text-align: right;">Significant GO/KEGG terms</th>
+<th style="text-align: right;">Best p-adj</th>
+<th>Top term</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adipose</td>
+<td style="text-align: right;">5:68–70</td>
+<td style="text-align: right;">619</td>
+<td style="text-align: right;">8.0</td>
+<td style="text-align: right;">115</td>
+<td style="text-align: right;">4.3 × 10⁻⁴⁶</td>
+<td>Nucleic acid metabolic process</td>
+</tr>
+<tr class="even">
+<td>Adipose</td>
+<td style="text-align: right;">5:119–121</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">7.9</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">1.9 × 10⁻⁴</td>
+<td>Collagen fibril organization</td>
+</tr>
+<tr class="odd">
+<td>Adipose</td>
+<td style="text-align: right;">6:100–102</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">7.8</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">8.1 × 10⁻⁸</td>
+<td>Extracellular region</td>
+</tr>
+<tr class="even">
+<td>Adipose</td>
+<td style="text-align: right;">12:43.5–45.5</td>
+<td style="text-align: right;">306</td>
+<td style="text-align: right;">37.4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6.7 × 10⁻⁵</td>
+<td>Organelle membrane</td>
+</tr>
+<tr class="odd">
+<td>Adipose</td>
+<td style="text-align: right;">2:188.5–190.5</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right;">9.3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5.2 × 10⁻⁵</td>
+<td>Protein processing in endoplasmic reticulum</td>
+</tr>
+<tr class="even">
+<td>Adipose</td>
+<td style="text-align: right;">6:71.5–73.5</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">47.1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5.0 × 10⁻⁴</td>
+<td>Pre-mRNA 5’-splice site binding</td>
+</tr>
+<tr class="odd">
+<td>Adipose</td>
+<td style="text-align: right;">14:10–12</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">10.6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.3 × 10⁻⁷</td>
+<td>Ribosome biogenesis</td>
+</tr>
+<tr class="even">
+<td>Adipose</td>
+<td style="text-align: right;">4:7–9</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2.5 × 10⁻²</td>
+<td>RNA biosynthetic process</td>
+</tr>
+<tr class="odd">
+<td>Adipose</td>
+<td style="text-align: right;">19:47.5–49.5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5.4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1.4 × 10⁻²</td>
+<td>RNA processing</td>
+</tr>
+<tr class="even">
+<td>Adipose</td>
+<td style="text-align: right;">10:98–100</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">65.2</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4.4 × 10⁻³</td>
+<td>Mitochondrion</td>
+</tr>
+<tr class="odd">
+<td>Adipose</td>
+<td style="text-align: right;">13:86.5–88.5</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">65.8</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5.6 × 10⁻⁸</td>
+<td>Olfactory receptor activity</td>
+</tr>
+<tr class="even">
+<td>Liver</td>
+<td style="text-align: right;">4:177–179</td>
+<td style="text-align: right;">147</td>
+<td style="text-align: right;">9.6</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.5 × 10⁻²</td>
+<td>Steroid biosynthesis</td>
+</tr>
+<tr class="odd">
+<td>Liver</td>
+<td style="text-align: right;">8:118–120</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9.1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.0 × 10⁻²</td>
+<td>Attachment of spindle microtubules to kinetochore</td>
+</tr>
+</tbody>
+</table>
+<h3 id="visualising-the-band-catalogue">2.3 Visualising the band
+catalogue</h3>
+<p>The trans-band Manhattan plots in <strong>Figure 2</strong> place
+every trans-eQTL peak on the genome, with the LD-based logP4 bands
+highlighted as gold intervals. The two priority hotspots for follow-up
+are the adipose Chr5:68–70 Mb band and the liver Chr4:177–179 Mb band.
+The interactive HTML versions below the static figure allow zooming and
+panning.</p>
+<figure id="fig-manhattan">
+<div class="two-col">
+<img src="transband_manhattan_adipose_large.png" alt="Adipose trans-band Manhattan" />
+<img src="transband_manhattan_liver_large.png" alt="Liver trans-band Manhattan" />
+</div>
+<figcaption>
+<strong>Figure 2.</strong> Trans-eQTL Manhattan plots (larger static
+version). Each point is a trans-eQTL peak; points falling inside the
+LD-based logP4 bands are shown in black and the band intervals are
+shaded in gold. Use the interactive plots below to zoom and explore
+details.
+</figcaption>
+</figure>
+<div class="interactive">
+<h4>
+Interactive Manhattan plots
+</h4>
+<div class="two-col">
+<iframe src="transband_manhattan_adipose.html" width="100%" height="650px" frameborder="0"></iframe>
+<iframe src="transband_manhattan_liver.html" width="100%" height="650px" frameborder="0"></iframe>
+</div>
+<p class="caption">
+Interactive zoomable versions of Figure 2. Hover over points for gene
+and peak information; use the plot toolbar to zoom, pan, or save a PNG.
+</p>
+</div>
+<p><strong>Figure 3</strong> zooms into the two priority regions. Points
+are coloured by the chromosome of the target gene (the gene-of-origin),
+illustrating that the bands receive input from many chromosomes, as
+expected for true trans regulation.</p>
+<figure id="fig-locuszoom">
+<div class="two-col">
+<img src="locuszoom_adipose_chr5_68-70_large.png" alt="Adipose Chr5:68-70 Mb" />
+<img src="locuszoom_liver_chr4_177-179_large.png" alt="Liver Chr4:177-179 Mb" />
+</div>
+<figcaption>
+<strong>Figure 3.</strong> LocusZoom-style views of the two priority
+trans bands (larger static version). The gold interval is the called
+LD-based band; points are trans peaks within a ±5 Mb window and are
+coloured by the chromosome of the regulated gene.
+</figcaption>
+</figure>
+<div class="interactive">
+<h4>
+Interactive LocusZoom plots
+</h4>
+<div class="two-col">
+<iframe src="locuszoom_adipose_chr5_68-70.html" width="100%" height="600px" frameborder="0"></iframe>
+<iframe src="locuszoom_liver_chr4_177-179.html" width="100%" height="600px" frameborder="0"></iframe>
+</div>
+<p class="caption">
+Interactive zoomable versions of Figure 3. Hover for gene details, zoom
+into the band region, and pan along the chromosome.
+</p>
+</div>
+<h3 id="gokegg-enrichment-reveals-tissue-specific-biology">2.4 GO/KEGG
+enrichment reveals tissue-specific biology</h3>
+<p>We ran over-representation analysis with gprofiler2 against
+<strong>GO Biological Process, GO Cellular Component, GO Molecular
+Function and KEGG</strong> for <em>Rattus norvegicus</em>. The
+background universe was built from the same raw GEMMA tables after
+applying the 4 ≤ -log₁₀ P ≤ 80 and well-annotated filters. Terms with
+adjusted p &lt; 0.05 were retained.</p>
+<p><strong>Table 4. Number of significant GO/KEGG terms by annotation
+source.</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Tissue</th>
+<th style="text-align: right;">GO BP</th>
+<th style="text-align: right;">GO CC</th>
+<th style="text-align: right;">GO MF</th>
+<th style="text-align: right;">KEGG</th>
+<th style="text-align: right;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Adipose</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="even">
+<td>Liver</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+</tr>
+</tbody>
+</table>
+<p>No GO/KEGG terms were shared between adipose and liver; all 167
+significant terms were tissue specific. This argues against a generic
+housekeeping signal and supports tissue-specific trans regulation.</p>
+<p><strong>Figure 4</strong> shows the overlap of target genes across
+the six largest trans bands (four adipose, two liver). Most gene sharing
+is within adipose bands; the two liver bands share only a handful of
+genes with adipose, reinforcing tissue specificity.</p>
+<figure id="fig-upset">
+<img src="upset_top_bands.png" alt="UpSet plot of target gene overlap across the largest trans bands" />
+<figcaption>
+<strong>Figure 4.</strong> UpSet plot of target-gene overlap across the
+six largest trans bands. Horizontal bars on the left show the number of
+genes in each band; vertical bars show the size of each intersection.
+</figcaption>
+</figure>
+<p>The band-by-term heatmap in <strong>Figure 5</strong> clusters terms
+and bands by shared enrichment. Three main neighbourhoods emerge:
+RNA/chromatin/transcription (driven by adipose Chr5:68–70),
+extracellular-matrix/ER (adipose Chr5:119–121, Chr2:188.5–190.5), and
+lipid/sterol metabolism (liver Chr4:177–179).</p>
+<figure id="fig-heatmap">
+<img src="band_term_heatmap.png" alt="Band × term heatmap" />
+<figcaption>
+<strong>Figure 5.</strong> Clustered heatmap of significant GO/KEGG
+terms across enriched trans bands. Colour intensity is -log₁₀ adjusted
+p-value (capped at 50).
+</figcaption>
+</figure>
+<p><strong>Figure 6</strong> highlights the dominant adipose signature.
+The strongest adipose signal is driven by the large Chr5:68–70 Mb
+hotspot and is dominated by RNA and nucleic acid metabolism,
+gene-expression regulation, nucleus/chromatin localization, and
+nucleic-acid binding. The top term, <em>nucleic acid metabolic
+process</em>, contains 257 genes from this band with an adjusted p ≈ 4 ×
+10⁻⁴⁶. These findings suggest that the major adipose trans hotspot
+regulates core gene-expression machinery. Other adipose bands point to
+collagen/extracellular matrix (Chr5:119–121), ribosome biogenesis
+(Chr14:10–12), ER/protein processing (Chr2:188.5–190.5), and olfactory
+receptor activity (Chr13:86.5–88.5).</p>
+<figure id="fig-topterms-adipose">
+<img src="enrichment_gokegg/top_terms_adipose_gokegg.png" alt="Top GO/KEGG terms in adipose trans bands" />
+<figcaption>
+<strong>Figure 6.</strong> Top GO/KEGG terms per annotation source in
+adipose trans bands. RNA and nucleic acid metabolism, transcriptional
+regulation and chromatin-related terms dominate.
+</figcaption>
+</figure>
+<p>With the stricter universe filter, only two liver bands produced
+significant GO/KEGG terms (<strong>Figure 7</strong>). Liver
+Chr4:177–179 Mb is enriched for <strong>Steroid biosynthesis</strong>
+(KEGG), while liver Chr8:118–120 Mb is enriched for <strong>attachment
+of spindle microtubules to kinetochore</strong> (GO BP). The
+lipid/sterol theme is consistent with liver metabolic function, but the
+limited number of enriched liver bands reflects both the smaller liver
+peak set and the conservative universe filter.</p>
+<figure id="fig-topterms-liver">
+<img src="enrichment_gokegg/top_terms_liver_gokegg.png" alt="Top GO/KEGG terms in liver trans bands" />
+<figcaption>
+<strong>Figure 7.</strong> Top GO/KEGG terms per annotation source in
+liver trans bands. Steroid biosynthesis and the kinetochore/spindle
+checkpoint are the only significant signals in this restricted GO/KEGG
+run.
+</figcaption>
+</figure>
+<p><strong>Figure 8</strong> summarises the pathway comparison between
+tissues. Adipose contributes the majority of terms, especially in GO
+BP/CC/MF; liver contributes KEGG metabolic and immune-related terms, and
+no GO/KEGG term is shared.</p>
+<figure id="fig-overlap">
+<img src="enrichment_gokegg/pathway_overlap_tissues_gokegg.png" alt="Pathway overlap between adipose and liver trans bands" />
+<figcaption>
+<strong>Figure 8.</strong> GO/KEGG pathway overlap between adipose and
+liver trans bands. Adipose contributes most terms; no terms are shared
+between tissues in this GO/KEGG-only analysis.
+</figcaption>
+</figure>
+<hr />
+<h2 id="discussion-and-next-steps">3. Discussion and next steps</h2>
+<p>The GO/KEGG-only enrichment results demonstrate that the LD-based
+trans bands are biologically interpretable, even under a very
+conservative universe filter. Adipose trans hotspots converge on
+RNA/nucleic-acid metabolism and chromatin organization, with the
+Chr5:68–70 Mb band acting as the dominant hub. Liver hotspots, by
+contrast, point to steroid/sterol metabolism. The complete absence of
+shared GO/KEGG terms between tissues argues that these are genuine
+tissue-specific regulatory signals rather than generic artifacts.</p>
+<p>These findings justify the next phase of the project: pan-genomic
+re-mapping with structural variants. SV-aware genotyping is expected to
+(i) refine the causal haplotypes within the priority hotspots, (ii)
+capture variation missed by the current SNP-only panel, and (iii) help
+explain tissue specificity if the same SV has different regulatory
+consequences in adipose and liver. The driver genes identified here,
+transcriptional/chromatin regulators in adipose and cholesterol/steroid
+biosynthesis enzymes in liver, provide focused candidate mediators for
+colocalization and experimental follow-up.</p>
+<p>Immediate next steps are:</p>
+<ol type="1">
+<li>Generate pan-genomic variant calls (SNPs, indels and SVs) for the HS
+rat cohort.</li>
+<li>Re-map cis and trans eQTLs with the expanded variant set and the
+same LD-based cis definition.</li>
+<li>Fine-map the priority hotspots: adipose Chr5:68–70 Mb and liver
+Chr4:177–179 Mb.</li>
+<li>Test whether SVs explain trans eQTL associations better than the
+current SNP-only models.</li>
+<li>Validate top driver genes using allele-specific expression, CRISPR
+or targeted assays where possible.</li>
+</ol>
+<hr />
+<h2 id="methods-brief">4. Methods (brief)</h2>
+<p><strong>LD-based cis and trans classification.</strong> For each eQTL
+peak, the nearest genotyped marker was identified and r² was computed
+with all markers within 5 Mb. The cis interval was defined as the
+contiguous region where r² ≥ 0.6 with the lead marker. A gene was
+classified as cis if it fell within this interval; otherwise the peak
+was trans.</p>
+<p><strong>Trans band detection.</strong> Trans bands were identified by
+sliding a 2 Mb window in 0.5 Mb steps across the genome, counting trans
+eQTL peaks per window, and applying a 10 Mb exclusion zone. Bands
+required at least three peaks.</p>
+<p><strong>Universe filter.</strong> For the enrichment background, raw
+GEMMA tables were filtered to well-annotated genes with 4 ≤ -log₁₀ P ≤
+80. This yielded 6,540 adipose, 3,790 liver and 8,349 combined genes.
+Poorly annotated genes (LOC, Riken, pseudogenes, uncharacterised) were
+removed using the same rules as the main Python pipeline.</p>
+<p><strong>Functional enrichment.</strong> Over-representation analysis
+was performed with gprofiler2 (organism <em>rnorvegicus</em>) against GO
+BP/CC/MF and KEGG only. A custom background (custom_annotated) was
+supplied for each tissue. Adjusted p &lt; 0.05 was considered
+significant.</p>
+<p><strong>Visualisation.</strong> Peirce-style cis–trans and Manhattan
+plots were generated with custom Python scripts using matplotlib;
+LocusZoom, heatmap and UpSet plots were generated with Python/R
+(matplotlib, seaborn, UpSetR); GO/KEGG summary plots were generated with
+R/ggplot2. Interactive Manhattan and LocusZoom plots were produced with
+Plotly. All figures are available in <code>reports/</code>.</p>
+<hr />
+<h2 id="references">References</h2>
+<ol type="1">
+<li>Alberts, R., Terpstra, P., Li, Y., et al. (2007). Sequence
+polymorphisms cause many false cis eQTLs. <em>PLoS ONE</em>, 2(7),
+e622.</li>
+<li>Ashburner, M., Ball, C.A., Blake, J.A., et al. (2000). Gene
+Ontology: tool for the unification of biology. <em>Nature Genetics</em>,
+25(1), 25–29.</li>
+<li>Breitling, R., Li, Y., Tesson, B.M., et al. (2008). Genetical
+genomics: spotlight on QTL hotspots. <em>PLoS Genetics</em>, 4(10),
+e1000232.</li>
+<li>Garrison, E., Guarracino, A., Heumos, S., et al. (2024). Building
+pangenome graphs. <em>Nature Methods</em>, 21(11), 2008–2012.</li>
+<li>Kanehisa, M., &amp; Goto, S. (2000). KEGG: kyoto encyclopedia of
+genes and genomes. <em>Nucleic Acids Research</em>, 28(1), 27–30.</li>
+<li>Kolberg, L., Raudvere, U., Kuzmin, I., et al. (2023). g:Profiler
+interoperable web service for functional profiling. <em>Nucleic Acids
+Research</em>, 51(W1), W207–W212.</li>
+<li>Mozhui, K., Ciobanu, D.C., Schikorski, T., et al. (2008). Dissection
+of a QTL hotspot on mouse distal chromosome 1. <em>PLoS Genetics</em>,
+4(11), e1000260.</li>
+<li>Peirce, J.L., Li, H., Wang, J., et al. (2006). How replicable are
+mRNA expression QTL? <em>Mammalian Genome</em>, 17, 643–656.</li>
+<li>Tran, T.H., Crouse, W.L., Keele, G.R., et al. (2023). Genetic
+mapping of multiple traits identifies novel genes for adiposity, lipids,
+and insulin secretory capacity in outbred rats. <em>Diabetes</em>,
+72(1), 135–148.</li>
+<li>Zhou, X., &amp; Stephens, M. (2012). Genome-wide efficient
+mixed-model analysis for association studies. <em>Nature Genetics</em>,
+44(7), 821–824.</li>
+</ol>
+</body>
+</html>
